@@ -1,0 +1,24 @@
+<!-- Tombol Play di tengah layar -->
+<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
+  <a href="#modal2" class="btn-floating btn-large blue modal-trigger play-btn" style="background-color:#142ac5 !important;">
+    <i class="large material-icons">play_arrow</i>
+  </a>
+</div>
+
+<!-- GENERATOR -->
+<div class="container white-text" style="margin-top:30px;">
+  <h5>🔗 Generator MRZYB-PLAYER</h5>
+  <p class="grey-text">Masukkan <b>judul</b>, <b>poster</b>, dan <b>link Google Drive Preview</b>.</p>
+
+  <!-- Tambahan link Telegram -->
+  <p style="margin-top:10px;">
+    📢 <a href="https://t.me/mrzyb_movie" target="_blank" class="blue-text text-lighten-2">Join Telegram</a>
+  </p>
+
+  <input type="text" id="inputTitle" class="white-text" placeholder="Judul Film" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
+  <input type="text" id="inputPoster" class="white-text" placeholder="URL Poster" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
+  <input type="text" id="inputLink" class="white-text" placeholder="https://drive.google.com/file/d/ID/preview" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
+
+  <button class="btn blue" onclick="makeShareLink()">Buat Link</button>
+  <div id="shareResult" style="margin-top:15px;"></div>
+</div>
