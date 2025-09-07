@@ -1,24 +1,247 @@
-<!-- Tombol Play di tengah layar -->
-<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
-  <a href="#modal2" class="btn-floating btn-large blue modal-trigger play-btn" style="background-color:#142ac5 !important;">
-    <i class="large material-icons">play_arrow</i>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<title>MRZYB Player Universal</title>
+<style>
+.tabs .tab a:focus,.tabs .tab a:focus.active{background:none}
+.col img{width:100%;border-radius:5px;margin-bottom:5px}
+.bg-fondo{display:flex;align-items:flex-end;padding:10px;padding-top:150px;position:relative;background:rgba(0,0,0,.7)}
+.bg-fondo h4{font-weight:500}
+.bg-fondo::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:url(https://i.pinimg.com/736x/7b/cb/95/7bcb9529cd6f5c4f12bb7d50a341abdb.jpg) no-repeat center center / cover;z-index:-1;opacity:.8}
+.modal{margin:50px auto}
+.iframe-container{position:relative;overflow:hidden;width:100%;padding-top:36.25%}
+.responsive-iframe{position:absolute;top:0;left:0;bottom:0;right:0;width:100%;height:100%}
+
+/* Glow & Pulse Effect */
+.play-btn {
+  box-shadow: 0 0 15px rgba(20,42,197,0.8);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(20,42,197,0.6); }
+  50% { transform: scale(1.15); box-shadow: 0 0 25px rgba(20,42,197,1); }
+  100% { transform: scale(1); box-shadow: 0 0 10px rgba(20,42,197,0.6); }
+}
+
+/* Animasi pulse untuk tombol play */
+.play-img {
+  animation: pulse 1.5s infinite;
+  transition: transform 0.2s;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.play-img:hover {
+  transform: scale(1.15) rotate(1deg);
+}
+
+</style>
+</head>
+<body class="grey darken-4" style="background-color: #000 !important;">
+
+
+<!-- Tombol Play pakai gambar -->
+<div style="position:absolute; top:20px; right:150px; z-index:1000;">
+  <a href="#modal2" class="modal-trigger">
+    <img src="https://api.pcloud.com/getpubthumb?code=XZUeoD5Zh2G4nFBzR3y1Pz8y4XgAFzSTuTyk&linkpassword=&size=1200x1200&crop=0&type=auto" class="play-img" 
+         alt="Play Button"
+         style="width:140px; height:auto; cursor:pointer;">
   </a>
+</div>
+
+
+<div class="row bg-fondo">
+  <div class="col s3 m4 l2">
+    <img id="poster" src="https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg" alt="poster">
+  </div>
+  <div class="col s9 m8 l10">
+    <h4 class="white-text" id="title">Romper el círculo - (2024)</h4>
+  </div>
+</div>
+
+<div class="container white-text">
+  <h5></h5>
+  <p class="flow-text grey-text"></p>
+</div>
+
+<!-- PLAYER -->
+<div id="modal2" class="modal grey darken-4">
+  <div class="modal-content white-text">
+    <div class="iframe-container">
+        <iframe allowfullscreen class="responsive-iframe" frameborder="0" id="video-frame" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+      
+      
+
+      
+      
+    </div>
+  </div>
+  <div class="modal-footer grey darken-4">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat white-text">EXIT</a>
+  </div>
 </div>
 
 <!-- GENERATOR -->
 <div class="container white-text" style="margin-top:30px;">
   <h5>🔗 Generator MRZYB-PLAYER</h5>
-  <p class="grey-text">Masukkan <b>judul</b>, <b>poster</b>, dan <b>link Google Drive Preview</b>.</p>
+
+
+
 
   <!-- Tambahan link Telegram -->
   <p style="margin-top:10px;">
     📢 <a href="https://t.me/mrzyb_movie" target="_blank" class="blue-text text-lighten-2">Join Telegram</a>
   </p>
 
+
+
   <input type="text" id="inputTitle" class="white-text" placeholder="Judul Film" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
+
   <input type="text" id="inputPoster" class="white-text" placeholder="URL Poster" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
+
   <input type="text" id="inputLink" class="white-text" placeholder="https://drive.google.com/file/d/ID/preview" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
 
   <button class="btn blue" onclick="makeShareLink()">Buat Link</button>
   <div id="shareResult" style="margin-top:15px;"></div>
 </div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+M.AutoInit();
+
+function loadMovie(data){
+  if(data.title) document.getElementById("title").innerText = data.title;
+  if(data.poster) document.getElementById("poster").src = data.poster;
+  if(data.video) document.getElementById("video-frame").src = data.video;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const encoded = params.get("data");
+  if(encoded){
+    try {
+      const decoded = atob(encoded);
+      const obj = JSON.parse(decoded);
+      loadMovie(obj);
+    } catch(e) {
+      console.error("Link tidak valid!");
+    }
+  } else {
+    loadMovie({
+      title: "Romper el círculo - (2024)",
+      poster: "https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg",
+      video: "https://drive.google.com/file/d/14GiJ9cw_uK17h5hapoea9gZt-D6tqhkz/preview"
+    });
+  }
+});
+
+function makeShareLink() {
+  const title = document.getElementById("inputTitle").value.trim();
+  const poster = document.getElementById("inputPoster").value.trim();
+  const video = document.getElementById("inputLink").value.trim();
+
+  if(!video){
+    document.getElementById("shareResult").innerHTML = "<p class='red-text'>⚠️ Masukkan link video!</p>";
+    return;
+  }
+
+  try {
+    const data = { title, poster, video };
+    const encoded = btoa(JSON.stringify(data));
+    const finalUrl = window.location.origin + window.location.pathname + "?data=" + encoded;
+
+    loadMovie(data);
+
+    document.getElementById("shareResult").innerHTML = `
+      <p>✅ Link siap copy:</p>
+      <input type="text" value="${finalUrl}" readonly style="background:#111;color:#0f0;padding:8px;width:100%;border:none;border-radius:5px;" onclick="this.select()">
+    `;
+  } catch(e){
+    document.getElementById("shareResult").innerHTML = "<p class='red-text'>⚠️ Data tidak valid!</p>";
+  }
+}
+</script>
+
+  <!-- STYLE -->
+  <style>
+    .bg-fondo {
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+      padding-top: 150px;
+      position: relative;
+      background: none !important;
+    }
+
+    .bg-fondo::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: url(https://i.pinimg.com/736x/7b/cb/95/7bcb9529cd6f5c4f12bb7d50a341abdb.jpg) no-repeat center center / cover;
+      z-index: -1;
+      opacity: 1 !important;
+    }
+
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+    }
+
+    .responsive-iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .episode-scroll-wrapper {
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .episode-scroll {
+      display: flex;
+      gap: 10px;
+    }
+
+    .episode-btn {
+      flex-shrink: 0;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .episode-btn.active-episode {
+      background-color: red !important;
+    }
+    
+
+.mrzyb {
+  text-shadow:
+    0 0 4px #000,
+    0 0 8px #000,
+    0 0 12px #000;
+}
+
+.bg-fondo::before {
+  opacity: 1 !important;
+}
+
+
+
+    
+  </style>
+
+
+</body>
+</html>
