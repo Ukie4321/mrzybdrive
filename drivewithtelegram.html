@@ -2,246 +2,354 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MRZYB Player Netflix Style</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<title>MRZYB Player Universal</title>
 <style>
-.tabs .tab a:focus,.tabs .tab a:focus.active{background:none}
-.col img{width:100%;border-radius:5px;margin-bottom:5px}
-.bg-fondo{display:flex;align-items:flex-end;padding:10px;padding-top:150px;position:relative;background:rgba(0,0,0,.7)}
-.bg-fondo h4{font-weight:500}
-.bg-fondo::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:url(https://i.pinimg.com/736x/7b/cb/95/7bcb9529cd6f5c4f12bb7d50a341abdb.jpg) no-repeat center center / cover;z-index:-1;opacity:.8}
-.modal{margin:50px auto}
-.iframe-container{position:relative;overflow:hidden;width:100%;padding-top:36.25%}
-.responsive-iframe{position:absolute;top:0;left:0;bottom:0;right:0;width:100%;height:100%}
+  body {
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 
-/* Glow & Pulse Effect */
-.play-btn {
-  box-shadow: 0 0 15px rgba(20,42,197,0.8);
-  animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 0 10px rgba(20,42,197,0.6); }
-  50% { transform: scale(1.15); box-shadow: 0 0 25px rgba(20,42,197,1); }
-  100% { transform: scale(1); box-shadow: 0 0 10px rgba(20,42,197,0.6); }
-}
+  /* Header dengan poster + judul */
+  .bg-fondo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    z-index: 10;
+    overflow: hidden;
+  }
 
-/* Animasi pulse untuk tombol play */
-.play-img {
-  animation: pulse 1.5s infinite;
-  transition: transform 0.2s;
-}
+  /* Background GIF */
+  .bg-fondo::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: url("https://i.pinimg.com/originals/1d/30/b5/1d30b5a0c298c02edaf2f501b22a6587.gif") no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+    opacity: 1;
+  }
 
-@keyframes pulse {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
+  /* Overlay hitam biar teks jelas */
+  .bg-fondo::after {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+  }
 
-.play-img:hover {
-  transform: scale(1.15) rotate(1deg);
-}
+  .poster-wrapper {
+    position: relative;
+    display: inline-block;
+  }
 
+  .movie-poster {
+    width: 180px;
+    border-radius: 10px;
+  }
+
+  /* Tulisan MRZYB di poster */
+  .poster-brand {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e50914;
+    text-shadow: 0 0 6px rgba(229,9,20,0.9), 0 0 12px rgba(229,9,20,0.7);
+    background: rgba(0,0,0,0.6);
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+
+  /* Tombol Play di poster */
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #e50914 !important;
+    box-shadow: 0 0 20px rgba(229,9,20,0.8);
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .play-btn:hover {
+    transform: translate(-50%,-50%) scale(1.1);
+  }
+
+  .play-btn i {
+    font-size: 36px;
+    color: white;
+  }
+
+  .movie-info h4 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .movie-meta {
+    margin-top: 10px;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 8px;
+    background: #333;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+
+  /* Input section keren */
+  .input-section {
+    background: rgba(20,20,20,0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    margin: 30px;
+  }
+
+  .input-section label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .input-section input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #2c2c2c;
+    color: #fff;
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .input-section input:focus {
+    outline: none;
+    background: #3a3a3a;
+    box-shadow: 0 0 8px rgba(229,9,20,0.7);
+  }
+
+  .input-section button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #e50914;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .input-section button:hover {
+    background: #f6121d;
+    box-shadow: 0 0 12px rgba(229,9,20,0.9);
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 80%;
+    max-width: 900px;
+    background: #111;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .modal iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* Floating Telegram button (ikon bulat saja) */
+  .telegram-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #229ED9;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(34,158,217,0.7);
+    z-index: 2000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .telegram-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(34,158,217,1);
+  }
+
+  .telegram-float img {
+    width: 28px;
+    height: 28px;
+  }
 </style>
 </head>
-<body class="grey darken-4" style="background-color: #000 !important;">
+<body>
 
-
-<!-- Tombol Play pakai gambar -->
-<div style="position:absolute; top:20px; right:150px; z-index:1000;">
-  <a href="#modal2" class="modal-trigger">
-    <img src="https://api.pcloud.com/getpubthumb?code=XZUeoD5Zh2G4nFBzR3y1Pz8y4XgAFzSTuTyk&linkpassword=&size=1200x1200&crop=0&type=auto" class="play-img" 
-         alt="Play Button"
-         style="width:140px; height:auto; cursor:pointer;">
-  </a>
-</div>
-
-
-<div class="row bg-fondo">
-  <div class="col s3 m4 l2">
-    <img id="poster" src="https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg" alt="poster">
+<!-- Header poster + judul -->
+<div class="bg-fondo">
+  <div class="poster-wrapper">
+    <span class="poster-brand">MRZYB</span>
+    <img id="poster" class="movie-poster" 
+         src="https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg" 
+         alt="poster">
+    <a href="#modal2" class="play-btn" onclick="openModal()">
+      <i class="material-icons">play_arrow</i>
+    </a>
   </div>
-  <div class="col s9 m8 l10">
-    <h4 class="white-text" id="title">Romper el círculo - (2024)</h4>
-  </div>
-</div>
-
-<div class="container white-text">
-  <h5></h5>
-  <p class="flow-text grey-text"></p>
-</div>
-
-<!-- PLAYER -->
-<div id="modal2" class="modal grey darken-4">
-  <div class="modal-content white-text">
-    <div class="iframe-container">
-        <iframe allowfullscreen class="responsive-iframe" frameborder="0" id="video-frame" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
-      
-      
-
-      
-      
+  <div class="movie-info">
+    <h4 id="title">Romper el círculo - (2024)</h4>
+    <div class="movie-meta">
+      <div class="chip" id="genre">Drama</div>
+      <div class="chip" id="rating">⭐ 8.5</div>
     </div>
   </div>
-  <div class="modal-footer grey darken-4">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat white-text">EXIT</a>
+</div>
+
+<!-- Modal player -->
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">✖</span>
+    <iframe id="video-frame" allowfullscreen></iframe>
   </div>
 </div>
 
-<!-- GENERATOR -->
-<div class="container white-text" style="margin-top:30px;">
-  <h5>🔗 Generator MRZYB-PLAYER</h5>
+<!-- Input generator -->
+<div class="input-section">
+  <label for="titleInput">Judul Film</label>
+  <input type="text" id="titleInput" placeholder="Masukkan judul film...">
 
+  <label for="posterInput">URL Poster</label>
+  <input type="text" id="posterInput" placeholder="Tempel URL poster...">
 
+  <label for="videoInput">URL Video</label>
+  <input type="text" id="videoInput" placeholder="Tempel URL video...">
 
+  <label for="genreInput">Genre</label>
+  <input type="text" id="genreInput" placeholder="Contoh: Drama">
 
-  <!-- Tambahan link Telegram -->
-  <p style="margin-top:10px;">
-    📢 <a href="https://t.me/mrzyb_movie" target="_blank" class="blue-text text-lighten-2">Join Telegram</a>
-  </p>
+  <label for="ratingInput">Rating</label>
+  <input type="text" id="ratingInput" placeholder="Contoh: 8.5">
 
-
-
-  <input type="text" id="inputTitle" class="white-text" placeholder="Judul Film" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
-
-  <input type="text" id="inputPoster" class="white-text" placeholder="URL Poster" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
-
-  <input type="text" id="inputLink" class="white-text" placeholder="https://drive.google.com/file/d/ID/preview" style="background:#222;padding:10px;border-radius:5px;width:100%;margin-bottom:10px;">
-
-  <button class="btn blue" onclick="makeShareLink()">Buat Link</button>
+  <button onclick="makeShareLink()">Generate Link</button>
   <div id="shareResult" style="margin-top:15px;"></div>
 </div>
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- Floating Telegram Icon -->
+<a href="https://t.me/mrzyb_movie" target="_blank" class="telegram-float">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+</a>
+
 <script>
-M.AutoInit();
+  function openModal() {
+    document.getElementById('modal2').style.display = 'flex';
+  }
+  function closeModal() {
+    document.getElementById('modal2').style.display = 'none';
+  }
 
-function loadMovie(data){
-  if(data.title) document.getElementById("title").innerText = data.title;
-  if(data.poster) document.getElementById("poster").src = data.poster;
-  if(data.video) document.getElementById("video-frame").src = data.video;
-}
+  function loadMovie(data){
+    if(data.title) document.getElementById("title").innerText = data.title;
+    if(data.poster) document.getElementById("poster").src = data.poster;
+    if(data.video) document.getElementById("video-frame").src = data.video;
+    if(data.genre) document.getElementById("genre").textContent = data.genre;
+    if(data.rating) document.getElementById("rating").textContent = "⭐ " + data.rating;
+  }
 
-window.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const encoded = params.get("data");
-  if(encoded){
+  window.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const encoded = params.get("data");
+    if(encoded){
+      try {
+        const decoded = atob(encoded);
+        const obj = JSON.parse(decoded);
+        loadMovie(obj);
+      } catch(e) {
+        console.error("Link tidak valid!");
+      }
+    } else {
+      loadMovie({
+        title: "Romper el círculo - (2024)",
+        poster: "https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg",
+        video: "https://drive.google.com/file/d/14GiJ9cw_uK17h5hapoea9gZt-D6tqhkz/preview",
+        genre: "Drama",
+        rating: "8.5"
+      });
+    }
+  });
+
+  function makeShareLink() {
+    const title = document.getElementById("titleInput").value.trim();
+    const poster = document.getElementById("posterInput").value.trim();
+    const video = document.getElementById("videoInput").value.trim();
+    const genre = document.getElementById("genreInput").value.trim();
+    const rating = document.getElementById("ratingInput").value.trim();
+
+    if(!video){
+      document.getElementById("shareResult").innerHTML = "<p style='color:red'>⚠️ Masukkan link video!</p>";
+      return;
+    }
+
     try {
-      const decoded = atob(encoded);
-      const obj = JSON.parse(decoded);
-      loadMovie(obj);
-    } catch(e) {
-      console.error("Link tidak valid!");
+      const data = { title, poster, video, genre, rating };
+      const encoded = btoa(JSON.stringify(data));
+      const finalUrl = window.location.origin + window.location.pathname + "?data=" + encoded;
+
+      loadMovie(data);
+
+      document.getElementById("shareResult").innerHTML = `
+        <p>✅ Link siap copy:</p>
+        <input type="text" value="${finalUrl}" readonly 
+          style="background:#111;color:#0f0;padding:8px;width:100%;border:none;border-radius:5px;" 
+          onclick="this.select()">
+      `;
+    } catch(e){
+      document.getElementById("shareResult").innerHTML = "<p style='color:red'>⚠️ Data tidak valid!</p>";
     }
-  } else {
-    loadMovie({
-      title: "Romper el círculo - (2024)",
-      poster: "https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg",
-      video: "https://drive.google.com/file/d/14GiJ9cw_uK17h5hapoea9gZt-D6tqhkz/preview"
-    });
   }
-});
-
-function makeShareLink() {
-  const title = document.getElementById("inputTitle").value.trim();
-  const poster = document.getElementById("inputPoster").value.trim();
-  const video = document.getElementById("inputLink").value.trim();
-
-  if(!video){
-    document.getElementById("shareResult").innerHTML = "<p class='red-text'>⚠️ Masukkan link video!</p>";
-    return;
-  }
-
-  try {
-    const data = { title, poster, video };
-    const encoded = btoa(JSON.stringify(data));
-    const finalUrl = window.location.origin + window.location.pathname + "?data=" + encoded;
-
-    loadMovie(data);
-
-    document.getElementById("shareResult").innerHTML = `
-      <p>✅ Link siap copy:</p>
-      <input type="text" value="${finalUrl}" readonly style="background:#111;color:#0f0;padding:8px;width:100%;border:none;border-radius:5px;" onclick="this.select()">
-    `;
-  } catch(e){
-    document.getElementById("shareResult").innerHTML = "<p class='red-text'>⚠️ Data tidak valid!</p>";
-  }
-}
 </script>
-
-  <!-- STYLE -->
-  <style>
-    .bg-fondo {
-      display: flex;
-      align-items: flex-end;
-      padding: 10px;
-      padding-top: 150px;
-      position: relative;
-      background: none !important;
-    }
-
-    .bg-fondo::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: url(https://i.pinimg.com/736x/7b/cb/95/7bcb9529cd6f5c4f12bb7d50a341abdb.jpg) no-repeat center center / cover;
-      z-index: -1;
-      opacity: 1 !important;
-    }
-
-    .iframe-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-    }
-
-    .responsive-iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .episode-scroll-wrapper {
-      overflow-x: auto;
-      padding: 10px 0;
-    }
-
-    .episode-scroll {
-      display: flex;
-      gap: 10px;
-    }
-
-    .episode-btn {
-      flex-shrink: 0;
-      min-width: 60px;
-      text-align: center;
-    }
-
-    .episode-btn.active-episode {
-      background-color: red !important;
-    }
-    
-
-.mrzyb {
-  text-shadow:
-    0 0 4px #000,
-    0 0 8px #000,
-    0 0 12px #000;
-}
-
-.bg-fondo::before {
-  opacity: 1 !important;
-}
-
-
-
-    
-  </style>
-
-
 </body>
 </html>
