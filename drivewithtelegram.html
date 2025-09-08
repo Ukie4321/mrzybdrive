@@ -62,7 +62,7 @@
     left: 8px;
     font-size: 16px;
     font-weight: bold;
-    color: #e50914;
+    color: #FFFFFF;
     text-shadow: 0 0 6px rgba(229,9,20,0.9), 0 0 12px rgba(229,9,20,0.7);
     background: rgba(0,0,0,0.6);
     padding: 3px 6px;
@@ -95,7 +95,7 @@
 
   .movie-info h4 {
     margin: 0;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: bold;
   }
 
@@ -253,7 +253,14 @@
 <div id="modal2" class="modal">
   <div class="modal-content">
     <span class="modal-close" onclick="closeModal()">✖</span>
-    <iframe id="video-frame" allowfullscreen></iframe>
+
+    
+    
+<iframe allowfullscreen   id="video-frame" sandbox="allow-same-origin allow-scripts" scrolling="no" src="" style="border: none;" width="100%"></iframe>
+    
+    
+    
+    
   </div>
 </div>
 
@@ -312,11 +319,11 @@
       }
     } else {
       loadMovie({
-        title: "Romper el círculo - (2024)",
-        poster: "https://image.tmdb.org/t/p/w500/2EH42blLQzgqwDWxn39RXkTgb91.jpg",
-        video: "https://drive.google.com/file/d/14GiJ9cw_uK17h5hapoea9gZt-D6tqhkz/preview",
-        genre: "Drama",
-        rating: "8.5"
+        title: "Purnama 2 (2004/2005)",
+        poster: "https://i.pinimg.com/736x/84/89/55/848955674ec23a00797738612a57d987.jpg",
+        video: "https://drive.google.com/file/d/12JV1uVXgfvvZEgEkiZcfa2uh-MVuob-a/preview",
+        genre: "School",
+        rating: "10"
       });
     }
   });
